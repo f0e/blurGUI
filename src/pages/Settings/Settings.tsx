@@ -5,13 +5,11 @@ import BlurSelect from '../../components/ProfileEditor/BlurControl/BlurSelect/Bl
 import BlurSlider from '../../components/ProfileEditor/BlurControl/BlurSlider/BlurSlider';
 import BlurSwitch from '../../components/ProfileEditor/BlurControl/BlurSwitch/BlurSwitch';
 import BlurText from '../../components/ProfileEditor/BlurControl/BlurText/BlurText';
-import MessageContext from '../../context/MessageContext';
 import SettingsContext from '../../context/SettingsContext';
 import { EGPUType } from '../../types/Settings';
 
 export default function Settings() {
   const { getSettings, saveSettings } = useContext(SettingsContext);
-  const { setMessage } = useContext(MessageContext);
 
   const [settings, setSettings] = useState(getSettings());
 
@@ -19,11 +17,6 @@ export default function Settings() {
 
   const save = async () => {
     await saveSettings(settings);
-
-    setMessage({
-      type: 'success',
-      message: 'settings saved',
-    });
 
     history.push('/');
   };
