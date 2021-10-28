@@ -1,7 +1,14 @@
-import { createContext, FunctionComponent, useEffect, useState } from 'react';
+import {
+  createContext,
+  FunctionComponent,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import BlurProfile from '../types/BlurProfile';
 import Render from '../types/Render';
 import { runBlur } from '../util/rendering';
+import SettingsContext from './SettingsContext';
 
 export interface IRenderContext {
   getRenderQueue: () => Render[];
@@ -20,6 +27,8 @@ export const RenderStore: FunctionComponent = ({ children }) => {
   const [renderQueue, setRenderQueue] = useState<Render[]>([]);
   const [activeRender, setActiveRender] = useState<RenderProgress | null>(null);
 
+  const { getSettings } = useContext(SettingsContext);
+
   const doRender = async (render: Render) => {
     setActiveRender({
       render,
@@ -37,16 +46,16 @@ export const RenderStore: FunctionComponent = ({ children }) => {
       );
     };
 
-    await runBlur(render, onProgress);
+    await runBlur(getSettings(), render, onProgress);
 
     setActiveRender(null);
     setRenderQueue((curQueue) => curQueue.slice(0, -1));
   };
 
   useEffect(() => {
-    console.log('Queue changed, ', renderQueue);
-
     if (renderQueue.length > 0 && !activeRender) {
+      console.log('Queue changed, ', renderQueue);
+
       const render = renderQueue[renderQueue.length - 1];
       doRender(render);
     }

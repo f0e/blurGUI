@@ -3,12 +3,14 @@ import {
   ArrowRight,
   Pause,
   PlayArrow,
+  VideocamRounded,
   VolumeMute,
   VolumeUp,
 } from '@mui/icons-material';
 import { Button, Slider } from '@mui/material';
 import { useEffect, useState, useContext, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { isReturnStatement } from 'typescript';
 import Loader from '../../components/Loader/Loader';
 import ProfileDisplay from '../../components/ProfileDisplay/ProfileDisplay';
 import ProfileSelector from '../../components/ProfileSelector/ProfileSelector';
@@ -38,6 +40,7 @@ function VideoPreview({
   const [volume, setVolume] = useState(1);
 
   const videoRef = useRef<HTMLVideoElement>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setObjectUrl((curUrl) => {
@@ -50,6 +53,11 @@ function VideoPreview({
     setPaused(true);
     setPlayed(0);
   }, [file]);
+
+  const updateProgress = () => {
+    if (!videoRef.current) return;
+    setPlayed(videoRef.current.currentTime / videoRef.current.duration);
+  };
 
   const playPause = () => {
     if (!videoRef.current) return;
@@ -95,12 +103,35 @@ function VideoPreview({
         {!objectUrl ? (
           <Loader message="loading video" />
         ) : (
-          <video
-            ref={videoRef}
-            onProgress={(e) => console.log(e)}
-            className="video"
-            src={objectUrl}
-          />
+          <div className="video-and-progress">
+            <video
+              ref={videoRef}
+              onTimeUpdate={() => updateProgress()}
+              onEnded={() => setPaused(true)}
+              className="video"
+              src={objectUrl}
+            />
+
+            <div
+              className="video-progress-container"
+              ref={progressBarRef}
+              onMouseDown={(e) => {
+                if (!progressBarRef.current) return;
+                const progressBounds =
+                  progressBarRef.current.getBoundingClientRect();
+
+                const clickPercent =
+                  (e.clientX - progressBounds.x) / progressBounds.width;
+
+                seek(Math.round(clickPercent * 100));
+              }}
+            >
+              <div
+                className="video-progress"
+                style={{ width: `${played * 100}%` }}
+              ></div>
+            </div>
+          </div>
         )}
 
         <ChangeFileButton
@@ -111,15 +142,6 @@ function VideoPreview({
       </div>
 
       <div className="video-controls">
-        <div className="control-row">
-          <Slider
-            min={0}
-            max={100}
-            value={played * 100}
-            onChange={(e, value) => seek(value as any)}
-          />
-        </div>
-
         <div className="control-row">
           <div className="control" onClick={playPause}>
             {paused ? <PlayArrow /> : <Pause />}
@@ -256,6 +278,12 @@ export default function Blur() {
       <br />
 
       <div className="links">
+        <Link to="/">
+          <Button variant="outlined" size="small">
+            back
+          </Button>
+        </Link>
+
         <Button
           variant="contained"
           size="small"

@@ -20,11 +20,39 @@
 
       margin: 0 -3rem;
 
-      video {
-        width: 100%;
-        min-width: 200px;
-        max-width: 400px;
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+      .video-and-progress {
+        position: relative;
+
+        video {
+          width: 100%;
+          min-width: 200px;
+          max-width: 400px;
+          box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        }
+
+        .video-progress-container {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+
+          background-color: #fff;
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+          border-radius: 1000px;
+          margin: 5px;
+
+          height: 5px;
+          width: calc(100% - 5px * 2); // dumb
+
+          cursor: pointer;
+
+          .video-progress {
+            background-color: #000;
+
+            border-radius: 1000px;
+            height: 100%;
+          }
+        }
       }
     }
 

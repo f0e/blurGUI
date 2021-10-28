@@ -5,8 +5,7 @@ const path = require('path');
 const PROFILES_PATH = '/profiles';
 
 function getProfilesPath() {
-  const profilesPath = path.join(app.getPath('userData'), PROFILES_PATH);
-  return profilesPath;
+  return path.join(app.getPath('userData'), PROFILES_PATH);
 }
 
 async function createProfilesPath() {

@@ -3,8 +3,14 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 
+const { createScriptsPath } = require('./scripts.js');
+createScriptsPath();
+
 const { createProfilesPath } = require('./profiles.js');
 createProfilesPath();
+
+const { createSettingsPath } = require('./settings.js');
+createSettingsPath();
 
 function createWindow() {
   const RESOURCES_PATH = isDev

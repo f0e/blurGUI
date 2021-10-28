@@ -1,3 +1,5 @@
+import { useContext, useState } from 'react';
+import { useHistory } from 'react-router';
 import {
   Button,
   Dialog,
@@ -10,25 +12,140 @@ import {
   Tabs,
 } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useContext, useState } from 'react';
 import BlurProfile, {
   BlurProfileSettings,
   EBlurWeighting,
-  EGPUType,
   EInterpolationProgram,
 } from '../../types/BlurProfile';
-import BlurSlider from './BlurSlider/BlurSlider';
-import BlurSelect from './BlurSelect/BlurSelect';
-import BlurSwitch from './BlurSwitch/BlurSwitch';
+import BlurSlider from './BlurControl/BlurSlider/BlurSlider';
+import BlurSelect from './BlurControl/BlurSelect/BlurSelect';
+import BlurSwitch from './BlurControl/BlurSwitch/BlurSwitch';
+import BlurText from './BlurControl/BlurText/BlurText';
+import ProfilesContext from '../../context/ProfilesContext';
 
 import './ProfileEditor.scss';
-import BlurText from './BlurText/BlurText';
-import ProfilesContext from '../../context/ProfilesContext';
-import { useHistory } from 'react-router';
 
 interface SettingsPageProps {
   settings: BlurProfileSettings;
   changeSetting: (key: string, value: any) => void;
+}
+
+function BlurSettings({ settings, changeSetting }: SettingsPageProps) {
+  return (
+    <>
+      <h4>motion blur</h4>
+
+      <BlurSwitch
+        settings={settings}
+        changeSetting={changeSetting}
+        variable="blur"
+        label={'blur'}
+      />
+
+      {settings.blur && (
+        <>
+          <BlurSlider
+            settings={settings}
+            changeSetting={changeSetting}
+            variable="blurAmount"
+            label={'blur amount'}
+            min={0.01}
+            max={2}
+            step={0.01}
+            marks={[
+              {
+                label: 'light',
+                value: 0.2,
+              },
+              {
+                label: 'regular',
+                value: 0.5,
+              },
+              {
+                label: 'full',
+                value: 1,
+              },
+              {
+                label: 'extreme',
+                value: 1.5,
+              },
+              {
+                label: 'insane',
+                value: 2,
+              },
+            ]}
+          />
+
+          <BlurSlider
+            settings={settings}
+            changeSetting={changeSetting}
+            variable="blurFps"
+            label={'blur fps'}
+            min={2}
+            max={120}
+            step={1}
+          />
+
+          <BlurSelect
+            settings={settings}
+            changeSetting={changeSetting}
+            variable="blurWeighting"
+            label={'blur weighting'}
+            options={EBlurWeighting}
+          />
+
+          {settings.blurWeighting !== 'equal' && (
+            <>
+              <br />
+
+              <h4>advanced blur</h4>
+
+              {['gaussian', 'gaussian_sym'].includes(
+                settings.blurWeighting
+              ) && (
+                <BlurSlider
+                  settings={settings}
+                  changeSetting={changeSetting}
+                  variable="blurWeightingGaussianStdDev"
+                  label={'weighting gaussian std dev'}
+                  min={1}
+                  max={50}
+                  step={1}
+                />
+              )}
+
+              {['pyramid', 'pyramid_sym'].includes(settings.blurWeighting) && (
+                <BlurSwitch
+                  settings={settings}
+                  changeSetting={changeSetting}
+                  variable="blurWeightingTriangleReverse"
+                  label={'weighting gaussian reverse triangle'}
+                />
+              )}
+
+              {['custom_weights', 'custom_function'].includes(
+                settings.blurWeighting
+              ) && <div style={{ textAlign: 'center' }}>TODO</div>}
+
+              {['gaussian', 'gaussian_sym', 'custom_function'].includes(
+                settings.blurWeighting
+              ) && (
+                <BlurSlider
+                  settings={settings}
+                  changeSetting={changeSetting}
+                  variable="blurWeightingBound"
+                  label={'weighting bound'}
+                  min={0}
+                  max={10}
+                  step={0.1}
+                />
+              )}
+            </>
+          )}
+        </>
+      )}
+    </>
+  );
 }
 
 function InterpolationSettings({ settings, changeSetting }: SettingsPageProps) {
@@ -98,207 +215,20 @@ function InterpolationSettings({ settings, changeSetting }: SettingsPageProps) {
   );
 }
 
-function BlurSettings({ settings, changeSetting }: SettingsPageProps) {
+function ExtraSettings({ settings, changeSetting }: SettingsPageProps) {
   return (
     <>
-      <h4>blur</h4>
-
-      <BlurSwitch
-        settings={settings}
-        changeSetting={changeSetting}
-        variable="blur"
-        label={'blur'}
-      />
-
-      {settings.blur && (
-        <>
-          <BlurSlider
-            settings={settings}
-            changeSetting={changeSetting}
-            variable="blurAmount"
-            label={'blur amount'}
-            min={0.01}
-            max={2}
-            step={0.01}
-            marks={[
-              {
-                label: 'light',
-                value: 0.2,
-              },
-              {
-                label: 'regular',
-                value: 0.5,
-              },
-              {
-                label: 'full',
-                value: 1,
-              },
-              {
-                label: 'extreme',
-                value: 1.5,
-              },
-              {
-                label: 'insane',
-                value: 2,
-              },
-            ]}
-          />
-
-          <BlurSlider
-            settings={settings}
-            changeSetting={changeSetting}
-            variable="blurFps"
-            label={'blur fps'}
-            min={2}
-            max={120}
-            step={1}
-          />
-
-          <BlurSelect
-            settings={settings}
-            changeSetting={changeSetting}
-            variable="blurWeighting"
-            label={'blur weighting'}
-            options={EBlurWeighting}
-          />
-
-          <br />
-
-          {settings.blurWeighting !== 'equal' && (
-            <>
-              <h4>advanced blur</h4>
-
-              {['gaussian', 'gaussian_sym'].includes(
-                settings.blurWeighting
-              ) && (
-                <BlurSlider
-                  settings={settings}
-                  changeSetting={changeSetting}
-                  variable="blurWeightingGaussianStdDev"
-                  label={'weighting gaussian std dev'}
-                  min={1}
-                  max={50}
-                  step={1}
-                />
-              )}
-
-              {['pyramid', 'pyramid_sym'].includes(settings.blurWeighting) && (
-                <BlurSwitch
-                  settings={settings}
-                  changeSetting={changeSetting}
-                  variable="blurWeightingTriangleReverse"
-                  label={'weighting gaussian reverse triangle'}
-                />
-              )}
-
-              {['custom_weights', 'custom_function'].includes(
-                settings.blurWeighting
-              ) && <div style={{ textAlign: 'center' }}>TODO</div>}
-
-              {['gaussian', 'gaussian_sym', 'custom_function'].includes(
-                settings.blurWeighting
-              ) && (
-                <BlurSlider
-                  settings={settings}
-                  changeSetting={changeSetting}
-                  variable="blurWeightingBound"
-                  label={'weighting bound'}
-                  min={0}
-                  max={10}
-                  step={0.1}
-                />
-              )}
-            </>
-          )}
-        </>
-      )}
-    </>
-  );
-}
-
-function RenderSettings({ settings, changeSetting }: SettingsPageProps) {
-  return (
-    <>
-      <h4>rendering</h4>
-
-      <BlurSlider
-        settings={settings}
-        changeSetting={changeSetting}
-        variable="quality"
-        label={'quality'}
-        min={0}
-        max={21}
-        step={1}
-        marks={[
-          {
-            label: 'lossless',
-            value: 0,
-          },
-          {
-            label: 'insane',
-            value: 11,
-          },
-          {
-            label: 'great',
-            value: 15,
-          },
-          {
-            label: 'good',
-            value: 18,
-          },
-          {
-            label: 'regular',
-            value: 21,
-          },
-        ]}
-      />
+      <h4>extra</h4>
 
       <BlurSwitch
         settings={settings}
         changeSetting={changeSetting}
         variable="deduplicate"
-        label={'deduplicate'}
-      />
-
-      <BlurSwitch
-        settings={settings}
-        changeSetting={changeSetting}
-        variable="detailedFilenames"
-        label={'detailed filenames'}
+        label={'remove duplicate frames'}
       />
 
       <br />
 
-      <h4>advanced rendering</h4>
-
-      <BlurSwitch
-        settings={settings}
-        changeSetting={changeSetting}
-        variable="gpu"
-        label={'gpu'}
-      />
-
-      <BlurSelect
-        settings={settings}
-        changeSetting={changeSetting}
-        variable="gpuType"
-        label={'gpu type'}
-        options={EGPUType}
-      />
-
-      <BlurText
-        settings={settings}
-        changeSetting={changeSetting}
-        variable="customFFmpegFilters"
-        label={'custom ffmpeg filters'}
-      />
-    </>
-  );
-}
-
-function FilterSettings({ settings, changeSetting }: SettingsPageProps) {
-  return (
-    <>
       <h4>filters</h4>
 
       <BlurSlider
@@ -330,13 +260,9 @@ function FilterSettings({ settings, changeSetting }: SettingsPageProps) {
         max={20}
         step={0.1}
       />
-    </>
-  );
-}
 
-function TimescaleSettings({ settings, changeSetting }: SettingsPageProps) {
-  return (
-    <>
+      <br />
+
       <h4>timescale</h4>
 
       <BlurSlider
@@ -466,14 +392,15 @@ export default function ProfileEditor({
         scrollButtons={true}
         allowScrollButtonsMobile
       >
-        <SettingTab label="blur" settingEnabled={profile.settings.blur} />
+        <SettingTab
+          label="motion blur"
+          settingEnabled={profile.settings.blur}
+        />
         <SettingTab
           label="interpolation"
           settingEnabled={profile.settings.interpolate}
         />
-        <SettingTab label="rendering" />
-        <SettingTab label="filters" />
-        <SettingTab label="timescale" />
+        <SettingTab label="extra" />
       </Tabs>
 
       <br />
@@ -492,19 +419,7 @@ export default function ProfileEditor({
           />
         </TabPanel>
         <TabPanel key={2} value={page} index={2}>
-          <RenderSettings
-            settings={profile.settings}
-            changeSetting={changeProfileSetting}
-          />
-        </TabPanel>
-        <TabPanel key={3} value={page} index={3}>
-          <FilterSettings
-            settings={profile.settings}
-            changeSetting={changeProfileSetting}
-          />
-        </TabPanel>
-        <TabPanel key={4} value={page} index={4}>
-          <TimescaleSettings
+          <ExtraSettings
             settings={profile.settings}
             changeSetting={changeProfileSetting}
           />

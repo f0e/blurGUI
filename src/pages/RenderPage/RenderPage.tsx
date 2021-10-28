@@ -15,7 +15,7 @@ export default function RenderPage() {
       <h3>rendering</h3>
 
       {renderQueue.length === 0 ? (
-        <h4>all renders finished</h4>
+        <div>all renders finished</div>
       ) : (
         renderQueue.map((render, i) => (
           <div

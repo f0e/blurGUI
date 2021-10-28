@@ -1,15 +1,11 @@
 import { Mark, Slider } from '@mui/material';
 import AutosizeInput from 'react-input-autosize';
-import { BlurProfileSettings } from '../../../types/BlurProfile';
+import BlurControl from '../BlurControl';
 import SettingContainer from '../SettingContainer/SettingContainer';
 
 import './BlurSlider.scss';
 
-interface SliderProps {
-  settings: BlurProfileSettings;
-  changeSetting: (key: string, value: any) => void;
-  variable: string;
-  label: string;
+interface SliderProps extends BlurControl {
   min: number;
   max: number;
   step: number;

@@ -1,13 +1,8 @@
 import { Input } from '@mui/material';
-import { BlurProfileSettings } from '../../../types/BlurProfile';
+import BlurControl from '../BlurControl';
 import SettingContainer from '../SettingContainer/SettingContainer';
 
-interface BlurTextProps {
-  settings: BlurProfileSettings;
-  changeSetting: (key: string, value: any) => void;
-  variable: string;
-  label: string;
-}
+interface BlurTextProps extends BlurControl {}
 
 export default function BlurText({
   settings,

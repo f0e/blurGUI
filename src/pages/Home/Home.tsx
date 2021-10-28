@@ -32,9 +32,11 @@ export default function Home() {
           </Button>
         </Link>
 
-        <Button variant="outlined" size="small">
-          settings
-        </Button>
+        <Link to="/settings">
+          <Button variant="outlined" size="small">
+            settings
+          </Button>
+        </Link>
       </div>
     </main>
   );

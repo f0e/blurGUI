@@ -1,9 +1,10 @@
 
 import Render from '../types/Render';
+import Settings from '../types/Settings';
 import { EInterpolationProgram } from '../types/BlurProfile'
 import { slash } from './helpers';
 
-export function generateScript(render: Render) {
+export function generateScript(settings: Settings, render: Render) {
   const filePath = slash((render.file as any).path);
 
   const video_script = [];
@@ -68,7 +69,7 @@ export function generateScript(render: Render) {
       let algorithm = render.profile.settings.interpolationAlgorithm;
       if (algorithm.toLowerCase() === "default") algorithm = "13";
 
-      video_script.push(`video = haf.InterFrame(video, GPU=${render.profile.settings.gpu ? "True" : "False"}, NewNum=float(video.fps) * ${render.profile.settings.interpolationFactor}, Preset="${speed}", Tuning="${tuning}", OverrideAlgo=${algorithm})`);
+      video_script.push(`video = haf.InterFrame(video, GPU=${settings.gpu ? "True" : "False"}, NewNum=float(video.fps) * ${render.profile.settings.interpolationFactor}, Preset="${speed}", Tuning="${tuning}", OverrideAlgo=${algorithm})`);
     }
   }
 

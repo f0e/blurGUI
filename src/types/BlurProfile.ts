@@ -8,12 +8,6 @@ export enum EBlurWeighting {
   custom_function = 'custom function',
 }
 
-export enum EGPUType {
-  nvidia = 'nvidia',
-  amd = 'amd',
-  intel = 'intel',
-}
-
 export enum EInterpolationProgram {
   svp = 'svp',
   rife = 'rife',
@@ -26,15 +20,11 @@ export class BlurProfileSettings {
   blurAmount: number = 1;
   blurFps: number = 60;
   blurWeighting: EBlurWeighting = EBlurWeighting.equal;
+  deduplicate: boolean = true;
 
   // interpolation
   interpolate: boolean = true;
   interpolationFactor: number = 3;
-
-  // rendering
-  quality: number = 12;
-  deduplicate: boolean = true;
-  detailedFilenames: boolean = false;
 
   // timescale
   inputTimescale: number = 1;
@@ -45,11 +35,6 @@ export class BlurProfileSettings {
   brightness: number = 1;
   saturation: number = 1;
   contrast: number = 1;
-
-  // advanced rendering
-  gpu: boolean = false;
-  gpuType: EGPUType = EGPUType.nvidia;
-  customFFmpegFilters: string = '';
 
   // advanced blur
   blurWeightingGaussianStdDev: number = 2;

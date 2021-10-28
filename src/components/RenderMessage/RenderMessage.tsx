@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import RenderContext from '../../context/RenderContext';
 import LinearProgressWithLabel from '../../components/ProgressBar/ProgressBar';
 
@@ -19,26 +19,30 @@ export default function RenderMessage(props: any) {
     activeRender && !blacklistedPages.includes(location.pathname);
 
   return (
-    <div
-      className={[`render-message`, !showingMessage ? 'hidden' : ''].join(' ')}
-    >
-      {activeRender && (
-        <>
-          <div className="render-name">
-            {activeRender.render.file.name.split('.')[0]}
-          </div>
-          <div className="render-progress">
-            <LinearProgressWithLabel
-              variant="determinate"
-              labelSide="left"
-              value={activeRender.progress * 100}
-            />
-          </div>
-          {rendersWaiting > 0 && (
-            <div className="render-left">{rendersWaiting} waiting</div>
-          )}
-        </>
-      )}
-    </div>
+    <Link to="/blur/render">
+      <div
+        className={[`render-message`, !showingMessage ? 'hidden' : ''].join(
+          ' '
+        )}
+      >
+        {activeRender && (
+          <>
+            <div className="render-name">
+              {activeRender.render.file.name.split('.')[0]}
+            </div>
+            <div className="render-progress">
+              <LinearProgressWithLabel
+                variant="determinate"
+                labelSide="left"
+                value={activeRender.progress * 100}
+              />
+            </div>
+            {rendersWaiting > 0 && (
+              <div className="render-left">{rendersWaiting} waiting</div>
+            )}
+          </>
+        )}
+      </div>
+    </Link>
   );
 }

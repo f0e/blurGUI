@@ -13,12 +13,14 @@ import RenderPage from './pages/RenderPage/RenderPage';
 import Profiles from './pages/Profiles/Profiles';
 import EditProfile from './pages/EditProfile/EditProfile';
 import CreateProfile from './pages/CreateProfile/CreateProfile';
+import Settings from './pages/Settings/Settings';
 import MessageBar from './components/MessageBar/MessageBar';
+import RenderMessage from './components/RenderMessage/RenderMessage';
 import { FilesStore } from './context/FilesContext';
 import { ProfilesStore } from './context/ProfilesContext';
 import { RenderStore } from './context/RenderContext';
 import { MessageStore } from './context/MessageContext';
-import RenderMessage from './components/RenderMessage/RenderMessage';
+import { SettingsStore } from './context/SettingsContext';
 
 import './App.scss';
 
@@ -56,14 +58,18 @@ function Routes() {
         <AnimatedRoute exact path="/blur/render" component={RenderPage} />
 
         <AnimatedRoute exact path="/profiles" component={Profiles} />
-
-        <Route exact path="/profiles/create" component={CreateProfile} />
-
-        <Route
+        <AnimatedRoute
+          exact
+          path="/profiles/create"
+          component={CreateProfile}
+        />
+        <AnimatedRoute
           exact
           path="/profiles/:profileName/edit"
           component={EditProfile}
         />
+
+        <AnimatedRoute exact path="/settings" component={Settings} />
       </Switch>
     </AnimatePresence>
   );
@@ -74,16 +80,18 @@ export default function App() {
     <Router>
       <ThemeStore>
         <FilesStore>
-          <ProfilesStore>
-            <RenderStore>
-              <MessageStore>
-                <Routes />
+          <SettingsStore>
+            <ProfilesStore>
+              <RenderStore>
+                <MessageStore>
+                  <Routes />
 
-                <RenderMessage />
-                <MessageBar />
-              </MessageStore>
-            </RenderStore>
-          </ProfilesStore>
+                  <RenderMessage />
+                  <MessageBar />
+                </MessageStore>
+              </RenderStore>
+            </ProfilesStore>
+          </SettingsStore>
         </FilesStore>
       </ThemeStore>
     </Router>

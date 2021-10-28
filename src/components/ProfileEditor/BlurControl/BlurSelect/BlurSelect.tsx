@@ -1,12 +1,8 @@
 import { MenuItem, Select } from '@mui/material';
-import { BlurProfileSettings } from '../../../types/BlurProfile';
+import BlurControl from '../BlurControl';
 import SettingContainer from '../SettingContainer/SettingContainer';
 
-interface BlurSelectProps {
-  settings: BlurProfileSettings;
-  changeSetting: (key: string, value: any) => void;
-  variable: string;
-  label: string;
+interface BlurSelectProps extends BlurControl {
   options: any;
 }
 

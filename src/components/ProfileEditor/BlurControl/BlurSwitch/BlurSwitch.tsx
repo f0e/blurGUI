@@ -1,13 +1,8 @@
 import { Switch } from '@mui/material';
-import { BlurProfileSettings } from '../../../types/BlurProfile';
+import BlurControl from '../BlurControl';
 import SettingContainer from '../SettingContainer/SettingContainer';
 
-interface BlurSwitchProps {
-  settings: BlurProfileSettings;
-  changeSetting: (key: string, value: any) => void;
-  variable: string;
-  label: string;
-}
+interface BlurSwitchProps extends BlurControl {}
 
 export default function BlurSwitch({
   settings,
