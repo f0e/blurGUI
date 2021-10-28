@@ -26,6 +26,9 @@ jobs:
         with:
           node-version: lts/erbium
 
+        # https://github.com/yarnpkg/yarn/issues/4890
+      - run: yarn install --network-timeout 1000000
+
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
