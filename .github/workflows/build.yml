@@ -24,7 +24,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v2
         with:
-          node-version: lts/erbium
+          node-version: 16
 
         # https://github.com/yarnpkg/yarn/issues/4890
       - run: yarn install --network-timeout 1000000
