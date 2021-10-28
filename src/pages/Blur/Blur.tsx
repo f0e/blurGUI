@@ -3,14 +3,12 @@ import {
   ArrowRight,
   Pause,
   PlayArrow,
-  VideocamRounded,
   VolumeMute,
   VolumeUp,
 } from '@mui/icons-material';
 import { Button, Slider } from '@mui/material';
 import { useEffect, useState, useContext, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { isReturnStatement } from 'typescript';
 import Loader from '../../components/Loader/Loader';
 import ProfileDisplay from '../../components/ProfileDisplay/ProfileDisplay';
 import ProfileSelector from '../../components/ProfileSelector/ProfileSelector';
@@ -278,11 +276,9 @@ export default function Blur() {
       <br />
 
       <div className="links">
-        <Link to="/">
-          <Button variant="outlined" size="small">
-            back
-          </Button>
-        </Link>
+        <Button variant="outlined" size="small" onClick={history.goBack}>
+          back
+        </Button>
 
         <Button
           variant="contained"

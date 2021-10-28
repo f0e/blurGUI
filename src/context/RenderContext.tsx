@@ -49,14 +49,14 @@ export const RenderStore: FunctionComponent = ({ children }) => {
     await runBlur(getSettings(), render, onProgress);
 
     setActiveRender(null);
-    setRenderQueue((curQueue) => curQueue.slice(0, -1));
+    setRenderQueue((curQueue) => curQueue.slice(1));
   };
 
   useEffect(() => {
     if (renderQueue.length > 0 && !activeRender) {
       console.log('Queue changed, ', renderQueue);
 
-      const render = renderQueue[renderQueue.length - 1];
+      const render = renderQueue[0];
       doRender(render);
     }
   }, [renderQueue]);
@@ -70,7 +70,7 @@ export const RenderStore: FunctionComponent = ({ children }) => {
       profile,
     };
 
-    setRenderQueue((curQueue) => curQueue.concat([render]));
+    setRenderQueue((curQueue) => [...curQueue, render]);
   };
 
   return (

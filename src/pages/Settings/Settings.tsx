@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { useContext, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import BlurSelect from '../../components/ProfileEditor/BlurControl/BlurSelect/BlurSelect';
 import BlurSlider from '../../components/ProfileEditor/BlurControl/BlurSlider/BlurSlider';
 import BlurSwitch from '../../components/ProfileEditor/BlurControl/BlurSwitch/BlurSwitch';
@@ -103,11 +103,9 @@ export default function Settings() {
       <br />
 
       <div className="links">
-        <Link to="/">
-          <Button variant="outlined" size="small">
-            back
-          </Button>
-        </Link>
+        <Button variant="outlined" size="small" onClick={history.goBack}>
+          back
+        </Button>
 
         <Button variant="contained" size="small" onClick={save}>
           save

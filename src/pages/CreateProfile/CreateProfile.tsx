@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button } from '@mui/material';
 import BlurProfile from '../../types/BlurProfile';
 import ProfileEditor from '../../components/ProfileEditor/ProfileEditor';
@@ -53,11 +53,9 @@ export default function CreateProfile() {
       <br />
 
       <div className="links">
-        <Link to="/">
-          <Button variant="outlined" size="small">
-            back
-          </Button>
-        </Link>
+        <Button variant="outlined" size="small" onClick={history.goBack}>
+          back
+        </Button>
 
         <Button
           variant="contained"

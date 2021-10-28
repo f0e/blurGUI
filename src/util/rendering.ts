@@ -3,7 +3,6 @@ import Settings from '../types/Settings';
 import { generateScript } from './vapoursynth';
 
 import moment from 'moment';
-import { BlurProfileSettings } from '../types/BlurProfile';
 
 const ipcRenderer = window.require('electron').ipcRenderer;
 const child_process = window.require('child_process');

@@ -17,7 +17,7 @@ export default function RenderPage() {
       {renderQueue.length === 0 ? (
         <div>all renders finished</div>
       ) : (
-        renderQueue.map((render, i) => (
+        [...renderQueue].reverse().map((render, i) => (
           <div
             style={{
               fontWeight: render === activeRender?.render ? 'bold' : 'normal',

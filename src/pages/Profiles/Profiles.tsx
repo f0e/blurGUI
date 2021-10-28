@@ -1,6 +1,6 @@
 import { Card, CardContent, Button } from '@mui/material';
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import ProfileDisplay from '../../components/ProfileDisplay/ProfileDisplay';
 import ProfilesContext from '../../context/ProfilesContext';
 import BlurProfile from '../../types/BlurProfile';
@@ -11,6 +11,8 @@ export default function EditProfile() {
   const { getAllProfiles } = useContext(ProfilesContext);
 
   const profiles = getAllProfiles();
+
+  const history = useHistory();
 
   return (
     <main className="profiles-page">
@@ -44,11 +46,9 @@ export default function EditProfile() {
       <br />
 
       <div className="links">
-        <Link to="/">
-          <Button variant="outlined" size="small">
-            back
-          </Button>
-        </Link>
+        <Button variant="outlined" size="small" onClick={history.goBack}>
+          back
+        </Button>
 
         <Link to="/profiles/create">
           <Button variant="contained" size="small">

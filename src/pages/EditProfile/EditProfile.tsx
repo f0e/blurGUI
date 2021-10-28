@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Button } from '@mui/material';
-import { Link, useRouteMatch, useHistory } from 'react-router-dom';
+import { useRouteMatch, useHistory } from 'react-router-dom';
 import ProfileEditor from '../../components/ProfileEditor/ProfileEditor';
 import BlurProfile from '../../types/BlurProfile';
 import ProfilesContext from '../../context/ProfilesContext';
@@ -58,11 +58,9 @@ export default function EditProfile() {
           <br />
 
           <div className="links">
-            <Link to="/">
-              <Button variant="outlined" size="small">
-                back
-              </Button>
-            </Link>
+            <Button variant="outlined" size="small" onClick={history.goBack}>
+              back
+            </Button>
           </div>
         </>
       ) : (
@@ -87,11 +85,9 @@ export default function EditProfile() {
           <br />
 
           <div className="links">
-            <Link to="/">
-              <Button variant="outlined" size="small">
-                back
-              </Button>
-            </Link>
+            <Button variant="outlined" size="small" onClick={history.goBack}>
+              back
+            </Button>
 
             <Button
               variant="contained"
