@@ -1,0 +1,80 @@
+.blur-page {
+  h2,
+  h3,
+  h4,
+  h5,
+  & {
+    text-align: center;
+  }
+
+  .video-player {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .video-and-nav {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      justify-items: center;
+
+      margin: 0 -3rem;
+
+      video {
+        width: 100%;
+        min-width: 200px;
+        max-width: 400px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+      }
+    }
+
+    .change-file-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 100%;
+
+      background-color: rgba(0, 0, 0, 0.02);
+      box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+        rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+      width: 2rem;
+      height: 2rem;
+
+      cursor: pointer;
+
+      margin: 0 1rem;
+
+      &.disabled {
+        cursor: unset;
+        opacity: 0;
+      }
+
+      transition: opacity 0.1s;
+    }
+
+    .video-controls {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 400px;
+
+      .control-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+
+        .control {
+          opacity: 1;
+          cursor: pointer;
+          transition: opacity 0.1s;
+
+          &:hover {
+            opacity: 0.75;
+          }
+        }
+      }
+    }
+  }
+}

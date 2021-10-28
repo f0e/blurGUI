@@ -1,0 +1,90 @@
+{
+  "name": "blurgui",
+  "version": "0.1.0",
+  "private": true,
+  "main": "public/main.js",
+  "homepage": "./",
+  "scripts": {
+    "start": "concurrently -k \"cross-env BROWSER=none yarn run react:start\" \"yarn electron:start\"",
+    "build": "yarn run react:build && electron-builder -c.extraMetadata.main=build/main.js",
+    "react:start": "craco start",
+    "react:build": "craco build",
+    "react:test": "craco test",
+    "react:eject": "craco eject",
+    "electron:start": "wait-on tcp:3000 && electron ."
+  },
+  "dependencies": {
+    "@craco/craco": "^6.3.0",
+    "@electron/remote": "^2.0.1",
+    "@emotion/react": "^11.5.0",
+    "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.4",
+    "@mui/material": "^5.0.4",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "concurrently": "^6.3.0",
+    "cross-env": "^7.0.3",
+    "electron-is-dev": "^2.0.0",
+    "framer-motion": "^5.0.0",
+    "fs-extra": "^10.0.0",
+    "moment": "^2.29.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-dropzone": "^11.4.2",
+    "react-input-autosize": "^3.0.0",
+    "react-router-dom": "^5.3.0",
+    "react-scripts": "4.0.3",
+    "sass": "^1.43.3",
+    "typescript": "^4.1.2",
+    "wait-on": "^6.0.0",
+    "web-vitals": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.11.4",
+    "@types/react": "^17.0.31",
+    "@types/react-dom": "^17.0.10",
+    "@types/react-input-autosize": "^2.2.1",
+    "@types/react-router-dom": "^5.3.1",
+    "electron": "^15.3.0",
+    "electron-builder": "^22.13.1"
+  },
+  "build": {
+    "appId": "com.f0e.blur",
+    "files": [
+      "dist/**/*",
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "build-assets/icon.png"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

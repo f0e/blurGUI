@@ -1,0 +1,312 @@
+<html>
+  <head>
+    <title>blur</title>
+    <link
+      rel="preload"
+      href="./MonumentExtended-Regular.otf"
+      as="font"
+      type="font/opentype"
+      crossorigin
+    />
+
+    <style>
+      :root {
+        --loader-anim-start-dist: 10px;
+        --loader-anim-easing: cubic-bezier(0.03, 0.82, 0.46, 1.03);
+        --loader-anim-time: 1s;
+      }
+
+      @font-face {
+        font-family: 'Monument Extended';
+        font-weight: normal;
+        src: url('./MonumentExtended-Regular.otf') format('opentype');
+      }
+
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: border-box;
+      }
+
+      html {
+        padding: 0;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        user-select: none;
+        -webkit-app-region: drag;
+
+        animation: fade-in 0.5s;
+
+        padding: 20px;
+      }
+
+      main {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        width: 100%;
+        height: 100%;
+
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: rgba(0, 0, 0, 0.2) 0 0 1rem 0.2rem;
+        border-radius: 4px;
+
+        padding: 1rem;
+
+        animation: fade-in 1s;
+      }
+
+      #c {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        z-index: -1;
+      }
+
+      #text {
+        font-family: 'Monument Extended';
+        font-size: 2rem;
+
+        transform: translateY(calc(-1 * var(--loader-anim-start-dist)));
+
+        transition: var(--loader-anim-time) var(--loader-anim-easing);
+      }
+
+      #loader-container {
+        position: absolute;
+
+        opacity: 0;
+        transform: translateY(var(--loader-anim-start-dist));
+
+        transition: var(--loader-anim-time) var(--loader-anim-easing);
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      #loader {
+        background: #000;
+
+        border-radius: 50%;
+
+        margin-top: 0.5rem;
+
+        height: 30px;
+        width: 30px;
+
+        animation: rotate 1s linear infinite;
+      }
+
+      #loader::before,
+      #loader::after {
+        content: '';
+        position: absolute;
+      }
+
+      #loader::before {
+        border-radius: 50%;
+        background: linear-gradient(
+              0deg,
+              hsla(0, 0%, 100%, 1) 50%,
+              hsla(0, 0%, 100%, 0.9) 100%
+            )
+            0% 0%,
+          linear-gradient(
+              90deg,
+              hsla(0, 0%, 100%, 0.9) 0%,
+              hsla(0, 0%, 100%, 0.6) 100%
+            )
+            100% 0%,
+          linear-gradient(
+              180deg,
+              hsla(0, 0%, 100%, 0.6) 0%,
+              hsla(0, 0%, 100%, 0.3) 100%
+            )
+            100% 100%,
+          linear-gradient(
+              360deg,
+              hsla(0, 0%, 100%, 0.3) 0%,
+              hsla(0, 0%, 100%, 0) 100%
+            )
+            0% 100%;
+        background-repeat: no-repeat;
+        background-size: 50% 50%;
+        top: -1px;
+        bottom: -1px;
+        left: -1px;
+        right: -1px;
+      }
+
+      #loader::after {
+        background: white;
+        border-radius: 50%;
+        top: 3%;
+        bottom: 3%;
+        left: 3%;
+        right: 3%;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="c"></canvas>
+
+    <main>
+      <div id="text">blur</div>
+
+      <div id="loader-container">
+        <div id="loader"></div>
+      </div>
+    </main>
+  </body>
+  <script>
+    (() => {
+      // setup
+      const main = document.querySelector('main');
+
+      const canvas = document.querySelector('#c');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const ctx = canvas.getContext('2d');
+
+      // settings
+      const animationTime = 1000;
+
+      const boxesPerSide = 50;
+      const boxOpacity = 0.1;
+      const boxOffset = parseInt(
+        getComputedStyle(document.body).padding.split('px')[0]
+      );
+
+      // constants
+      const boxStart = [main.offsetTop, main.offsetLeft];
+      const boxSize = [main.offsetWidth, main.offsetHeight];
+
+      // helpers
+      function easeOutCirc(x) {
+        return Math.sqrt(1 - Math.pow(x - 1, 2));
+      }
+
+      // main
+      class BlurBox {
+        constructor(num, flipped) {
+          this.time = 0;
+          this.num = num;
+          this.flipped = flipped;
+          this.offset = 0;
+
+          this.moved = false;
+        }
+
+        animate(delta) {
+          if (!this.moved) {
+            this.time += delta;
+
+            const goalOffset = (this.num / boxesPerSide) * boxOffset;
+
+            if (this.time > animationTime) {
+              this.moved = true;
+            } else {
+              const percent = 1 - easeOutCirc(this.time / animationTime);
+
+              this.offset = goalOffset * percent;
+            }
+          }
+        }
+
+        draw() {
+          const outPercent = (boxesPerSide - (this.num - 1)) / boxesPerSide;
+
+          ctx.fillStyle = `rgba(255, 255, 255, ${outPercent * boxOpacity})`;
+
+          const mult = this.flipped ? 1 : -1;
+          ctx.fillRect(
+            boxStart[0] + this.offset * mult,
+            boxStart[1] - this.offset * mult,
+            boxSize[0],
+            boxSize[1]
+          );
+        }
+      }
+
+      let boxes = [];
+      function setup() {
+        boxes = [];
+
+        // center box
+        boxes.push(new BlurBox(0, false));
+
+        // side boxes
+        for (let side = 0; side <= 1; side++) {
+          const flipped = side == 1;
+          for (let num = 1; num <= boxesPerSide; num++) {
+            boxes.push(new BlurBox(num, flipped));
+          }
+        }
+      }
+
+      let lastTime;
+      let elapsed = 0;
+      function animate(now) {
+        if (!lastTime) lastTime = now;
+        const delta = now - lastTime || 0;
+        elapsed += delta;
+        lastTime = now;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (const box of boxes) {
+          box.animate(delta);
+          box.draw();
+        }
+
+        if (elapsed > animationTime) return;
+
+        requestAnimationFrame(animate);
+      }
+
+      function startAnimation() {
+        animate();
+      }
+
+      setup();
+      startAnimation();
+
+      setTimeout(() => {
+        const text = document.querySelector('#text');
+        text.style.transform = 'translateY(-18px)';
+
+        const loader = document.querySelector('#loader-container');
+        loader.style.opacity = 1;
+        loader.style.transform = 'translateY(18px)';
+      }, animationTime);
+    })();
+  </script>
+</html>

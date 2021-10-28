@@ -1,0 +1,10 @@
+.home-page {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+
+  .file-selector {
+    flex-grow: 1;
+  }
+}

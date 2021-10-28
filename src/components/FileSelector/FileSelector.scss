@@ -1,0 +1,24 @@
+.file-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem;
+
+  width: 100%;
+
+  color: rgba(0, 0, 0, 0.75);
+
+  cursor: pointer;
+
+  text-align: center;
+
+  background-color: rgb(0, 0, 0, 0.01);
+  border: 1px dashed rgb(0, 0, 0, 0.1);
+
+  transition: background-color 0.07s;
+
+  &:hover {
+    background-color: rgb(0, 0, 0, 0.03);
+  }
+}

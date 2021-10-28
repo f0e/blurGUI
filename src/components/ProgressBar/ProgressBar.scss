@@ -1,0 +1,12 @@
+.progress-bar {
+  display: flex;
+  align-items: center;
+
+  .progress-bar-bar {
+    width: 100%;
+
+    &.label-right {
+      margin-right: 0.5rem;
+    }
+  }
+}

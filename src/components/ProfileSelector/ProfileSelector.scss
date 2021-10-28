@@ -1,0 +1,18 @@
+.profile-selector {
+  h4 {
+    margin-bottom: 0.5rem;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    height: 2rem;
+
+    > * {
+      height: 100%;
+    }
+  }
+}

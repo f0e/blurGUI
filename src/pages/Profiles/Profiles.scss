@@ -1,0 +1,15 @@
+.profiles-page {
+  #profiles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+}
+
+.profile-card {
+  transition: 0.1s;
+
+  &:hover {
+    transform: scale(0.99, 0.99);
+  }
+}

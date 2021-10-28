@@ -1,0 +1,108 @@
+@font-face {
+  font-family: 'Zen Kaku Gothic Antique';
+  src: url('./fonts/ZenKakuGothicAntique-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Monument Extended';
+  src: url('./fonts/MonumentExtended-Regular.otf') format('opentype');
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  position: relative;
+
+  background-color: var(--background-colour);
+  color: var(--text-colour);
+
+  padding: 1rem 3rem;
+  padding-bottom: 1.7rem;
+
+  margin: 0 auto;
+  max-width: 40rem;
+  height: 100%;
+
+  user-select: none;
+  overflow-x: hidden;
+
+  font-size: 14px;
+
+  transition: color 0.1s, background-color 0.2s;
+}
+
+main {
+  min-height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+* {
+  font-family: 'Zen Kaku Gothic Antique';
+}
+
+.hidden {
+  display: none;
+}
+
+.muted {
+  opacity: 0.8;
+}
+
+.links {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+// override default styles
+h1 {
+  text-align: center;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Monument Extended';
+  margin-top: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+.MuiSlider-markLabel {
+  font-size: 0.9em !important;
+}
