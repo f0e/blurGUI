@@ -44,15 +44,15 @@ export default function EditProfile() {
       <br />
 
       <div className="links">
-        <Link to="/profiles/create">
-          <Button variant="contained" size="small">
-            create new profile
-          </Button>
-        </Link>
-
         <Link to="/">
           <Button variant="outlined" size="small">
             back
+          </Button>
+        </Link>
+
+        <Link to="/profiles/create">
+          <Button variant="contained" size="small">
+            create new profile
           </Button>
         </Link>
       </div>

@@ -20,12 +20,8 @@ export default function BlurSelect({
   const value = (settings as any)[variable];
 
   return (
-    <SettingContainer className="blur-select" margin="0.5rem">
-      <div>
-        {label}
-        <br />
-        <div style={{ fontWeight: 'bold' }}>{value}</div>
-      </div>
+    <SettingContainer className="blur-select" margin="0.3rem">
+      <div>{label}</div>
 
       <Select
         value={value}

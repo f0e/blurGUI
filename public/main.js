@@ -25,7 +25,7 @@ function createWindow() {
       transparent: true,
       frame: false,
       alwaysOnTop: true,
-      icon: getAssetPath('blur-shadow.png'),
+      icon: getAssetPath('icon.png'),
     });
 
     splash.loadURL(
@@ -40,7 +40,7 @@ function createWindow() {
     show: false,
     width: 500,
     height: 475,
-    icon: getAssetPath('blur-shadow.png'),
+    icon: getAssetPath('icon.png'),
     webPreferences: {
       enableRemoteModule: true,
       nodeIntegration: true,

@@ -87,6 +87,12 @@ export default function EditProfile() {
           <br />
 
           <div className="links">
+            <Link to="/">
+              <Button variant="outlined" size="small">
+                back
+              </Button>
+            </Link>
+
             <Button
               variant="contained"
               size="small"
@@ -95,12 +101,6 @@ export default function EditProfile() {
             >
               save
             </Button>
-
-            <Link to="/">
-              <Button variant="outlined" size="small">
-                back
-              </Button>
-            </Link>
           </div>
         </>
       )}
