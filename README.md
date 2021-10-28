@@ -1,5 +1,5 @@
-![blur header](https://github.com/f0e/blurGUI/blob/main/assets/blur-header.png?raw=true)
-![screens](https://github.com/f0e/blurGUI/blob/main/assets/screens.png?raw=true)
+![blur header](https://github.com/f0e/blurGUI/blob/main/media/blur-header.png?raw=true)
+![screens](https://github.com/f0e/blurGUI/blob/main/media/screens.png?raw=true)
 
 ## about
 
