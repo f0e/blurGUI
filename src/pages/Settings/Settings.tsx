@@ -110,15 +110,15 @@ export default function Settings() {
       <br />
 
       <div className="links">
-        <Button variant="contained" size="small" onClick={save}>
-          save
-        </Button>
-
         <Link to="/">
           <Button variant="outlined" size="small">
             back
           </Button>
         </Link>
+
+        <Button variant="contained" size="small" onClick={save}>
+          save
+        </Button>
       </div>
     </main>
   );
