@@ -17,6 +17,8 @@ export const SettingsStore: FunctionComponent = ({ children }) => {
   // load settings on startup
   useEffect(() => {
     updateSettings();
+    // todo: fix this error properly
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getSettings = () => {
@@ -35,7 +37,6 @@ export const SettingsStore: FunctionComponent = ({ children }) => {
 
     const newSettings = Object.assign(new Settings(), settingsJSON);
     setSettings(newSettings);
-    console.log('loaded settings', newSettings);
   };
 
   const saveSettings = async (settings: Settings) => {

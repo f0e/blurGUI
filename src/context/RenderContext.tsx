@@ -59,6 +59,8 @@ export const RenderStore: FunctionComponent = ({ children }) => {
       const render = renderQueue[0];
       doRender(render);
     }
+    // todo: fix this error properly
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [renderQueue]);
 
   const getRenderQueue = () => renderQueue;
