@@ -19,12 +19,17 @@ This GUI version of the application is still in development, so many features wi
 
 ### vapoursynth plugins
 
-- [FFMS2](https://github.com/FFMS/ffms2)
-- [HAvsFunc](https://github.com/HomeOfVapourSynthEvolution/havsfunc)
-- [SVPflow 4.2.0.142](https://web.archive.org/web/20190322064557/http://www.svp-team.com/files/gpl/svpflow-4.2.0.142.zip)
+`VapourSynth/plugins64`
+
+- [ffms2](https://github.com/FFMS/ffms2)
+- [svpflow 4.2.0.142](https://web.archive.org/web/20190322064557/http://www.svp-team.com/files/gpl/svpflow-4.2.0.142.zip)
 - [vs-frameblender](https://github.com/f0e/vs-frameblender)
-- [weighting.py](https://github.com/f0e/blur/blob/master/plugins/weighting.py)
-- [filldrops.py](https://github.com/f0e/blur/blob/master/plugins/filldrops.py)
+
+`Python/Python39/site-packages`
+
+- [havsfunc](https://github.com/HomeOfVapourSynthEvolution/havsfunc)
+- [weighting](https://github.com/f0e/blur/blob/master/plugins/weighting.py)
+- [filldrops](https://github.com/f0e/blur/blob/master/plugins/filldrops.py)
 
 ### building
 
