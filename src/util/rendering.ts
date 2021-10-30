@@ -4,8 +4,9 @@ import { generateScript } from './vapoursynth';
 
 import moment from 'moment';
 
+const { ffmpegPath, ffprobePath } = window.require('ffmpeg-ffprobe-static');
 const ipcRenderer = window.require('electron').ipcRenderer;
-const child_process = window.require('child_process');
+const childProcess = window.require('child_process');
 const fs = window.require('fs-extra');
 const path = window.require('path');
 
@@ -16,7 +17,7 @@ export function run(
   return new Promise((resolve, reject) => {
     const joinedCommand = command.join(' ');
     console.log(joinedCommand);
-    const child = child_process.exec(joinedCommand);
+    const child = childProcess.exec(joinedCommand);
 
     let output = '';
     const onDataInner = (data: string) => {
@@ -34,7 +35,7 @@ export function run(
 
 export async function getVideoFormat(filePath: string) {
   const result = await run([
-    'ffprobe',
+    ffprobePath,
     '-v',
     'quiet',
     '-of',
@@ -54,7 +55,7 @@ function buildFFmpegScript(
   videoPath: string,
   outputPath: string
 ) {
-  let ffmpegCommand = ['ffmpeg'];
+  let ffmpegCommand = [ffmpegPath];
 
   // general settings
   ffmpegCommand.push('-loglevel error -hide_banner -stats');

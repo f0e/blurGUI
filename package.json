@@ -26,6 +26,7 @@
     "concurrently": "^6.3.0",
     "cross-env": "^7.0.3",
     "electron-is-dev": "^2.0.0",
+    "ffmpeg-ffprobe-static": "^4.3.1-rc.6",
     "framer-motion": "^5.0.0",
     "fs-extra": "^10.0.0",
     "moment": "^2.29.1",
@@ -51,7 +52,8 @@
     "electron-builder": "^22.13.1"
   },
   "build": {
-    "appId": "com.f0e.blur",
+    "appId": "com.f0e.blurGUI",
+    "productName": "blurGUI",
     "files": [
       "dist/**/*",
       "build/**/*",
@@ -64,9 +66,14 @@
     "win": {
       "target": [
         "nsis",
-        "portable"
+        "zip"
       ],
       "icon": "assets/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "artifactName": "${productName} ${version} installer.${ext}",
+      "allowToChangeInstallationDirectory": true
     }
   },
   "eslintConfig": {

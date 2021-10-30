@@ -42,11 +42,13 @@ export function generateScript(settings: Settings, render: Render) {
     video_script.push(`video = core.std.AssumeFPS(video, fpsnum=(video.fps * (1 / ${render.profile.settings.inputTimescale})))`);
 
   // interpolation
+  video_script.push(`interpolated_fps = float(video.fps) * ${render.profile.settings.interpolationFactor}`);
+
   if (render.profile.settings.interpolate) {
     if (render.profile.settings.interpolationProgram === EInterpolationProgram.rife) {
       video_script.push(`video = core.resize.Bicubic(video, format=vs.RGBS)`);
 
-      video_script.push(`while video.fps < render.profile.settings.interpolated_fps:`);
+      video_script.push(`while video.fps < interpolated_fps:`);
       video_script.push(`	video = RIFE(video)`);
 
       video_script.push(`video = core.resize.Bicubic(video, format=vs.YUV420P8, matrix_s="709")`);
@@ -54,7 +56,7 @@ export function generateScript(settings: Settings, render: Render) {
     else if (render.profile.settings.interpolationProgram === EInterpolationProgram.rifeNCNN) {
       video_script.push(`video = core.resize.Bicubic(video, format=vs.RGBS)`);
 
-      video_script.push(`while video.fps < render.profile.settings.interpolated_fps:`);
+      video_script.push(`while video.fps < interpolated_fps:`);
       video_script.push(`	video = core.rife.RIFE(video)`);
 
       video_script.push(`video = core.resize.Bicubic(video, format=vs.YUV420P8, matrix_s="709")`);
@@ -69,7 +71,7 @@ export function generateScript(settings: Settings, render: Render) {
       let algorithm = render.profile.settings.interpolationAlgorithm;
       if (algorithm.toLowerCase() === "default") algorithm = "13";
 
-      video_script.push(`video = haf.InterFrame(video, GPU=${settings.gpu ? "True" : "False"}, NewNum=float(video.fps) * ${render.profile.settings.interpolationFactor}, Preset="${speed}", Tuning="${tuning}", OverrideAlgo=${algorithm})`);
+      video_script.push(`video = haf.InterFrame(video, GPU=${settings.gpu ? "True" : "False"}, NewNum=interpolatedFps, Preset="${speed}", Tuning="${tuning}", OverrideAlgo=${algorithm})`);
     }
   }
 

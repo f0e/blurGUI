@@ -14,7 +14,6 @@ This GUI version of the application is still in development, so many features wi
 ### dependencies
 
 - [Python](https://www.python.org/downloads)
-- [FFmpeg](https://ffmpeg.org/download.html)
 - [VapourSynth x64](https://www.vapoursynth.com)
 
 ### vapoursynth plugins
