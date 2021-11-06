@@ -43,7 +43,7 @@ export default function EditProfile() {
 
     await Promise.all(promises);
 
-    history.push('/profiles');
+    history.goBack();
   };
 
   return (

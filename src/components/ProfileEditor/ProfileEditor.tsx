@@ -344,7 +344,7 @@ export default function ProfileEditor({
 
     if (deleting) {
       await deleteProfile(profile.name);
-      history.push('/profiles');
+      history.goBack();
     }
   };
 
@@ -388,8 +388,8 @@ export default function ProfileEditor({
       <Tabs
         value={page}
         onChange={changePage}
-        variant="scrollable"
         scrollButtons={true}
+        centered
         allowScrollButtonsMobile
       >
         <SettingTab

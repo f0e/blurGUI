@@ -25,7 +25,7 @@ export default function CreateProfile() {
 
     await saveProfile(profile);
 
-    history.push('/profiles');
+    history.goBack();
   };
 
   return (

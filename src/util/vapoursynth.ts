@@ -71,7 +71,7 @@ export function generateScript(settings: Settings, render: Render) {
       let algorithm = render.profile.settings.interpolationAlgorithm;
       if (algorithm.toLowerCase() === "default") algorithm = "13";
 
-      video_script.push(`video = haf.InterFrame(video, GPU=${settings.gpu ? "True" : "False"}, NewNum=interpolatedFps, Preset="${speed}", Tuning="${tuning}", OverrideAlgo=${algorithm})`);
+      video_script.push(`video = haf.InterFrame(video, GPU=${settings.gpu ? "True" : "False"}, NewNum=interpolated_fps, Preset="${speed}", Tuning="${tuning}", OverrideAlgo=${algorithm})`);
     }
   }
 

@@ -18,7 +18,7 @@ export default function Settings() {
   const save = async () => {
     await saveSettings(settings);
 
-    history.push('/');
+    history.goBack();
   };
 
   const changeSetting = (key: string, value: string) => {

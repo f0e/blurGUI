@@ -4,7 +4,6 @@ import { generateScript } from './vapoursynth';
 
 import moment from 'moment';
 
-const { ffmpegPath, ffprobePath } = window.require('ffmpeg-ffprobe-static');
 const ipcRenderer = window.require('electron').ipcRenderer;
 const childProcess = window.require('child_process');
 const fs = window.require('fs-extra');
@@ -12,7 +11,7 @@ const path = window.require('path');
 
 export function run(
   command: string[],
-  onData?: (data: string) => void
+  onData?: (data: string, err: boolean) => void
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     const joinedCommand = command.join(' ');
@@ -20,13 +19,13 @@ export function run(
     const child = childProcess.exec(joinedCommand);
 
     let output = '';
-    const onDataInner = (data: string) => {
+    const onDataInner = (data: string, err: boolean) => {
       output += data;
-      onData && onData(data);
+      onData && onData(data, err);
     };
 
-    child.stdout.on('data', onDataInner);
-    child.stderr.on('data', onDataInner);
+    child.stdout.on('data', (data: string) => onDataInner(data, false));
+    child.stderr.on('data', (data: string) => onDataInner(data, true));
 
     child.on('exit', () => resolve(output));
     child.on('error', () => reject(output));
@@ -35,7 +34,7 @@ export function run(
 
 export async function getVideoFormat(filePath: string) {
   const result = await run([
-    ffprobePath,
+    'ffprobe',
     '-v',
     'quiet',
     '-of',
@@ -55,7 +54,7 @@ function buildFFmpegScript(
   videoPath: string,
   outputPath: string
 ) {
-  let ffmpegCommand = [ffmpegPath];
+  let ffmpegCommand = ['ffmpeg'];
 
   // general settings
   ffmpegCommand.push('-loglevel error -hide_banner -stats');
@@ -172,7 +171,7 @@ export async function runBlur(
     outputPath
   );
 
-  const command = [...vapoursynthCommand, '|', ...ffmpegCommand, '|', 'ffplay'];
+  const command = [...vapoursynthCommand, '|', ...ffmpegCommand];
 
   // get video duration
   const videoFormat = await getVideoFormat((render.file as any).path);
@@ -183,7 +182,7 @@ export async function runBlur(
 
   onProgress(0);
 
-  const onData = (line: string) => {
+  const onData = (line: string, err: boolean) => {
     const getElapsed = () => {
       let match = line.match(
         /frame=\s*[^\s]+\s+fps=\s*[^\s]+\s+q=\s*[^\s]+\s+(?:size|Lsize)=\s*[^\s]+\s+time=\s*([^\s]+)\s+/
@@ -207,6 +206,8 @@ export async function runBlur(
 
       console.log('Render progress:', elapsedPercent);
     }
+
+    if (err) console.log(line);
   };
 
   const result = await run(command, onData);
