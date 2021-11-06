@@ -9,9 +9,7 @@ The amount of motion blur is easily configurable, and there are additional optio
 
 This GUI version of the application is still in development, so many features will likely be unstable. For a more consistent experience see https://github.com/f0e/blur for now.
 
-## dev
-
-### dependencies
+## dependencies
 
 - [Python](https://www.python.org/downloads)
 - [VapourSynth x64](https://www.vapoursynth.com)
@@ -29,6 +27,8 @@ This GUI version of the application is still in development, so many features wi
 - [havsfunc](https://github.com/HomeOfVapourSynthEvolution/havsfunc)
 - [weighting](https://github.com/f0e/blur/blob/master/plugins/weighting.py)
 - [filldrops](https://github.com/f0e/blur/blob/master/plugins/filldrops.py)
+
+## dev
 
 ### building
 
